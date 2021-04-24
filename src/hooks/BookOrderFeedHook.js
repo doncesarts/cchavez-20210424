@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
-const GENERIC_ERROR_MESSAGE = "Unable to retrieve data, please try again by refreshing the page.";
+import { useTranslation } from 'react-i18next';
+
+
 
 /**  websocket products */
 export const PRODUCTS = {
@@ -50,6 +52,8 @@ const updateOrders = (orders, ordersDelta = []) => {
 const useOrderBookFeed = (productId , url ) => {
   const [orderBook, setOrderBook] = useState({ asks: {}, bids: {} });
   const [webSocket, setWebSocket] = useState(undefined);
+  const { t } = useTranslation();
+  const GENERIC_ERROR_MESSAGE = t('BookOrderFeedHook_GenericError');
   useEffect(() => {
     let _webSocket = undefined;
     try {

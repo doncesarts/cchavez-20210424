@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Grid } from "@material-ui/core";
 import { Alert, AlertTitle } from "@material-ui/lab";
-
+import { useTranslation } from 'react-i18next';
 import OrderBookTable from "./OrderBookTable";
 import useOrderBookFeed from "../hooks/BookOrderFeedHook";
 
@@ -48,6 +48,7 @@ const formatCurrency = (numberStr) =>
 const OrderBook = (props) => {
   const { numLevels, url, productId } = props;
   const { orderBook } = useOrderBookFeed(productId, url);
+  const { t } = useTranslation();
   // const handleOnClick = (e) => {
   //   e.preventDefault();
   //   webSocket.close();
@@ -61,7 +62,7 @@ const OrderBook = (props) => {
         <Container maxWidth="md">
           {orderBook.errorMsg && (
             <Alert severity="error">
-              <AlertTitle>Error</AlertTitle>
+              <AlertTitle>{t('OrderBook_AlertTitle')}</AlertTitle>
               {orderBook.errorMsg}
             </Alert>
           )}
@@ -69,7 +70,7 @@ const OrderBook = (props) => {
             <Grid item xs={12} sm={6}>
               <OrderBookTable
                 data-testid="book-ask"
-                title="Order Book Asks"
+                title={t('OrderBook_TableAsksTitle')}
                 variant="ask"
                 orders={asks}
               />
@@ -77,7 +78,7 @@ const OrderBook = (props) => {
             <Grid item xs={12} sm={6}>
               <OrderBookTable
                 data-testid="book-bids"
-                title="Order Book Bids"
+                title={t('OrderBook_TableBidsTitle')}
                 variant="bid"
                 orders={bids}
               />

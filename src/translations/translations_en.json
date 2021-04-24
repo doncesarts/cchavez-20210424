@@ -1,0 +1,10 @@
+{
+    "Header_Title": "XBT/USDT Futures Book Order",
+    "OrderBook_AlertTitle": "Error",
+    "OrderBook_TableAsksTitle": "Order Book Asks",
+    "OrderBook_TableBidsTitle": "Order Book Bids",
+    "OrderBookTable_ColumnPrice": "PRICE",
+    "OrderBookTable_ColumnSize": "SIZE",
+    "OrderBookTable_ColumnTotal": "TOTAL",
+    "BookOrderFeedHook_GenericError": "Unable to retrieve data, please try again by refreshing the page."
+}

@@ -74,7 +74,7 @@ describe("renders the order book", () => {
       <OrderBook numLevels={10} productId={productId} url={url} />
     );
     expect(useOrderBookFeed).toBeCalledWith(productId, url);
-    expect(getByTestId("table-Order Book Asks")).toBeInTheDocument();
-    expect(getByTestId("table-Order Book Bids")).toBeInTheDocument();
+    expect(getByTestId("table-OrderBook_TableAsksTitle")).toBeInTheDocument();
+    expect(getByTestId("table-OrderBook_TableBidsTitle")).toBeInTheDocument();
   });
 });

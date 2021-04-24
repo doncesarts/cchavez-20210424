@@ -6,9 +6,7 @@ test("should handle an error connection", () => {
     useOrderBookFeed(PRODUCTS.XBT_USD_FUTURES, "fake")
   );
   expect(result.current.orderBook).toBeTruthy();
-  expect(result.current.orderBook.errorMsg).toBe(
-    "Unable to retrieve data, please try again by refreshing the page."
-  );
+  expect(result.current.orderBook.errorMsg).toBe("BookOrderFeedHook_GenericError");
   expect(result.current.webSocket).toBeFalsy();
 });
 

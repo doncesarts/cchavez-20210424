@@ -1,5 +1,6 @@
 import React from "react";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { useTranslation } from 'react-i18next';
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -32,7 +33,7 @@ const StyledTableRow = withStyles((theme) => ({
  */
 const OrderBookTable = (props) => {
   const classes = useStyles();
-
+  const { t } = useTranslation();
   const { title, orders, variant } = props;
   const StyledTableCell = withStyles((theme) => ({
     head: {
@@ -59,9 +60,9 @@ const OrderBookTable = (props) => {
       >
         <TableHead>
           <StyledTableRow>
-            <StyledTableCell align="left">PRICE</StyledTableCell>
-            <StyledTableCell align="left">SIZE</StyledTableCell>
-            <StyledTableCell align="left">TOTAL</StyledTableCell>
+            <StyledTableCell align="left">{t('OrderBookTable_ColumnPrice')}</StyledTableCell>
+            <StyledTableCell align="left">{t('OrderBookTable_ColumnSize')}</StyledTableCell>
+            <StyledTableCell align="left">{t('OrderBookTable_ColumnTotal')}</StyledTableCell>
           </StyledTableRow>
         </TableHead>
         <TableBody>
