@@ -28,6 +28,16 @@ errorMsg:GENERIC_ERROR_MESSAGE,
 }));
 ```  
 5. How would you track down a performance issue in production? Have you ever had to do this?
+> Yes, first step is to require all the data possible in order to be able to replicated in another environment. 
+> What is the issue ? Steps to reproduce the issue? Version of the WebApp, Version of the API , Backend etc etc, version of the browser, operating system of the user, operating system of the server. 
+> Check the logs of the server, browser , http requests , http errors. 
+> If the deployed app has a "debug" or "probe" mode, enable it  and increase the level of logs. 
+> After gathering all the data, then it is important to know if the issue happens in an out of the box version of the web app or if there is any customization on the top. 
+> Am I able to reproduce the error in another environment ? If yes, it is a problem on the app, if not it could be an issue related to the environment. 
+> Analyze the root cause of the issue, once it is found, create an automated test so it is easier to reproduce the issue. 
+> Fix the issue, if there is a hotfix branch , commit , test  it, and deploy it. 
+>I had to do this many times in the past, the error could be in any different layer , so must of the times a team is needed to analyze the issue.   
+>I had experience in something call "war rooms" where there is a group of different specialist that collaborate with each other in order to find the issue as soon as possible. 
 
 6. Can you describe common security concerns to consider for a frontend developer?
 > The most common security concerns that a front end developer must think about are the following: SQL injection , Cross-Site Scripting , this could be done by cleaning the markup that is going to be generated , so removing any malicious code before it is actually executed, I have used DomPurify in order to do this, specially on places where the output/input accepts rich text, also try to avoid as much as possible any output with rich text. 
