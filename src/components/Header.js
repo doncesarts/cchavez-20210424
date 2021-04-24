@@ -1,6 +1,10 @@
 import { AppBar } from "@material-ui/core";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
+/**
+ *  The header displays a app bar 
+ * @author christopher chavez
+ */
 const Header = () => {
   return (
     <div data-testid="app-bar">

@@ -10,7 +10,15 @@ const formatCurrency = (numberStr) =>
   Number.parseFloat(numberStr)
     .toFixed(2)
     .replace(/\d(?=(\d{3})+\.)/g, "$&,");
-export const getOrdersToDisplay = (orders, deep) => {
+    
+    /**
+     * It calculates the total amount of orders.
+     *
+     * @param {Object} orders The orders with the price and size.
+     * @param {number} numLevels The number of entries to display.
+     * @return  the orders updated and sorted.
+     */
+  export const getOrdersToDisplay = (orders, numLevels) => {
   if (orders === undefined) return {};
   const sortedOrders = Object.entries(orders).sort(ordersDesc);
   // calculate total
@@ -26,20 +34,29 @@ export const getOrdersToDisplay = (orders, deep) => {
       ];
     }
   }
-  return sortedOrders.slice(0, deep);
+  return sortedOrders.slice(0, numLevels);
 };
+/**
+ * The order book displays the bid and ask order book of a given product id.
+ * @param {Object} props The props of the component
+ * @param {number} props.numLevels The number of entries to display.
+ * @param {string} props.productId The productId subscribe to.
+ * @param {string} props.url The websocket URL to connect to.
+ * @return {*} the order books
+ * @author christopher chavez
+ */
 const OrderBook = (props) => {
   const { numLevels, url, productId } = props;
-  const { orderBook, webSocket } = useOrderBookFeed(productId, url);
-  const handleOnClick = (e) => {
-    e.preventDefault();
-    webSocket.close();
-  };
+  const { orderBook } = useOrderBookFeed(productId, url);
+  // const handleOnClick = (e) => {
+  //   e.preventDefault();
+  //   webSocket.close();
+  // };
   const bids = getOrdersToDisplay(orderBook.bids, numLevels);
   const asks = getOrdersToDisplay(orderBook.asks, numLevels);
   return (
     <div data-testid="order-book">
-      <button onClick={handleOnClick}>Stop</button>
+      {/* <button onClick={handleOnClick}>Stop</button> */}
       <section className="text-center">
         <Container maxWidth="md">
           {orderBook.errorMsg && (

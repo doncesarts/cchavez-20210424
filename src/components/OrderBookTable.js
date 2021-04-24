@@ -21,6 +21,15 @@ const StyledTableRow = withStyles((theme) => ({
   },
 }))(TableRow);
 
+/**
+ * The order book table displays orders as a responsive table.
+ * @param {Object} props The props of the component
+ * @param {string} props.title The title.
+ * @param {Object} props.orders The orders to display.
+ * @param {string} props.variant The variant of the order book, it can be "bid" or "ask"
+ * @return {*} the order books table.
+ * @author christopher chavez
+ */
 const OrderBookTable = (props) => {
   const classes = useStyles();
 

@@ -5,7 +5,11 @@ import Footer from "./components/Footer";
 import { PRODUCTS } from "./hooks/BookOrderFeedHook";
 
 import { Container, CssBaseline } from "@material-ui/core";
-
+/**
+ * Displays an order book that is updated via WebSockets.
+ *
+ * @author christopher chavez
+ */
 const App = () => {
   return (
     <>

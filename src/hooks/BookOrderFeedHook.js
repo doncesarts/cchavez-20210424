@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
+const GENERIC_ERROR_MESSAGE = "Unable to retrieve data, please try again by refreshing the page.";
 
+/**  websocket products */
 export const PRODUCTS = {
   XBT_USD_FUTURES: "PI_XBTUSD",
 };
+/**  websocket messages */
 const MESSAGES = {
   SUBSCRIBE: (productId) =>
     JSON.stringify({
@@ -11,12 +14,20 @@ const MESSAGES = {
       product_ids: [productId],
     }),
 };
+/**  websocket types of events */
 const FEED_EVENTS = {
   SUBSCRIBED: "subscribed",
   SNAPSHOT: "book_ui_1_snapshot",
   DELTA: "book_ui_1",
 };
 
+/**
+ * Updates an array of orders with a delta of orders.
+ *
+ * @param {Array} orders, the orders to update.
+ * @param {Array} [ordersDelta=[]] , the delta to update the orders
+ * @return {Array}  updated orders
+ */
 const updateOrders = (orders, ordersDelta = []) => {
   const ordersUpdated = { ...orders };
   ordersDelta.forEach(([price, size]) => {
@@ -28,11 +39,15 @@ const updateOrders = (orders, ordersDelta = []) => {
   });
   return ordersUpdated;
 };
-
-const useOrderBookFeed = (
-  productId = PRODUCTS.XBT_USD_FUTURES,
-  url = "wss://www.cryptofacilities.com/ws/v1"
-) => {
+/**
+ * Connects to a web socket and receives its feed.
+ *
+ * @param {*} productId , the product id to subscribe
+ * @param {*} url , the web socket url
+ * @return {*} 
+ * @author christopher chavez
+ */
+const useOrderBookFeed = (productId , url ) => {
   const [orderBook, setOrderBook] = useState({ asks: {}, bids: {} });
   const [webSocket, setWebSocket] = useState(undefined);
   useEffect(() => {
@@ -77,8 +92,7 @@ const useOrderBookFeed = (
         setOrderBook((prevState) => ({
           ...prevState,
           ...{
-            errorMsg:
-              "Unable to retrieve data, please try again by refreshing the page.",
+            errorMsg:GENERIC_ERROR_MESSAGE,
           },
         }));
       };
@@ -87,8 +101,7 @@ const useOrderBookFeed = (
       setOrderBook((prevState) => ({
         ...prevState,
         ...{
-          errorMsg:
-            "Unable to retrieve data, please try again by refreshing the page.",
+          errorMsg:GENERIC_ERROR_MESSAGE,
         },
       }));
     }
