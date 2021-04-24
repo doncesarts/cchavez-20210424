@@ -1,4 +1,4 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 
 export const PRODUCTS = {
   XBT_USD_FUTURES: "PI_XBTUSD",
@@ -36,62 +36,70 @@ const useOrderBookFeed = (
   const [orderBook, setOrderBook] = useState({ asks: {}, bids: {} });
   const [webSocket, setWebSocket] = useState(undefined);
   useEffect(() => {
-    let  _webSocket = undefined; 
+    let _webSocket = undefined;
     try {
+      // eslint-disable-next-line no-undef
       _webSocket = new WebSocket(url);
 
-    
-    _webSocket.onopen = () => _webSocket.send(MESSAGES.SUBSCRIBE(productId));
-    _webSocket.onmessage = (event) => {
-      // listen to data sent from the websocket server
-      const data = JSON.parse(event.data);
-      console.log("onmessage-data", data);
-      if (data.event === FEED_EVENTS.SUBSCRIBED) {
-          // 
-      } else if (data.feed === FEED_EVENTS.SNAPSHOT) {
-        //   set initial snapshot
-        setOrderBook({
-          feed: data.feed,
-          numLevels: data.numLevels,
-          product_id: data.product_id,
-          errorMsg: undefined,
-          asks: Object.fromEntries(new Map(data.asks)),
-          bids: Object.fromEntries(new Map(data.bids)),
-        });
-      } else if (data.feed === FEED_EVENTS.DELTA) {
+      _webSocket.onopen = () => _webSocket.send(MESSAGES.SUBSCRIBE(productId));
+      _webSocket.onmessage = (event) => {
+        // listen to data sent from the websocket server
+        const data = JSON.parse(event.data);
+        // console.log("onmessage-data", data);
+        if (data.event === FEED_EVENTS.SUBSCRIBED) {
+          //
+        } else if (data.feed === FEED_EVENTS.SNAPSHOT) {
+          //   set initial snapshot
+          setOrderBook({
+            feed: data.feed,
+            numLevels: data.numLevels,
+            product_id: data.product_id,
+            errorMsg: undefined,
+            asks: Object.fromEntries(new Map(data.asks)),
+            bids: Object.fromEntries(new Map(data.bids)),
+          });
+        } else if (data.feed === FEED_EVENTS.DELTA) {
+          setOrderBook((prevState) => ({
+            ...prevState,
+            ...{
+              errorMsg: undefined,
+              asks: updateOrders(prevState.asks, data.asks),
+              bids: updateOrders(prevState.bids, data.bids),
+            },
+          }));
+        }
+      };
+      _webSocket.onclose = () => {
+        // console.log("disconnected");
+      };
+      _webSocket.onerror = function () {
+        // console.error("WebSocket error observed:", event);
         setOrderBook((prevState) => ({
           ...prevState,
           ...{
-            errorMsg: undefined,
-            asks: updateOrders(prevState.asks, data.asks),
-            bids: updateOrders(prevState.bids, data.bids),
+            errorMsg:
+              "Unable to retrieve data, please try again by refreshing the page.",
           },
         }));
-      }
-    };
-    _webSocket.onclose = () => {
-      console.log("disconnected");
-    };
-    _webSocket.onerror = function (event) {
-      console.error("WebSocket error observed:", event);
+      };
+      setWebSocket(_webSocket);
+    } catch (e) {
       setOrderBook((prevState) => ({
-        ...prevState, ...{ errorMsg : "Unable to retrieve data, please try again by refreshing the page."}
+        ...prevState,
+        ...{
+          errorMsg:
+            "Unable to retrieve data, please try again by refreshing the page.",
+        },
       }));
-    };
-    setWebSocket(_webSocket);
-  } catch (e) {
-    setOrderBook((prevState) => ({
-      ...prevState, ...{ errorMsg : "Unable to retrieve data, please try again by refreshing the page."}
-    }));
-  }
+    }
 
     return () => {
       // disconnect websocket
-      if(!!_webSocket)_webSocket.close();
+      if (_webSocket !== null) _webSocket.close();
     };
   }, [productId, url]);
 
-  return {orderBook, webSocket};
+  return { orderBook, webSocket };
 };
 
 export default useOrderBookFeed;

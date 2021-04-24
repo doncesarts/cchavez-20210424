@@ -8,20 +8,23 @@ import { Container, CssBaseline } from "@material-ui/core";
 
 const App = () => {
   return (
-    <><CssBaseline />
-    <div className="App">
-    <Container maxWidth="lg">
-      <Header/>
-        <main role="main">
-          <OrderBook numLevels={10} 
-          productId = {PRODUCTS.XBT_USD_FUTURES}
-          url={ process.env.REACT_APP_ORDER_BOOK_SOCKET_URL}></OrderBook>
-        </main>
+    <>
+      <CssBaseline />
+      <div className="App">
+        <Container maxWidth="lg">
+          <Header />
+          <main role="main">
+            <OrderBook
+              numLevels={10}
+              productId={PRODUCTS.XBT_USD_FUTURES}
+              url={process.env.REACT_APP_ORDER_BOOK_SOCKET_URL}
+            ></OrderBook>
+          </main>
         </Container>
-        <Footer/>
-    </div>
+        <Footer />
+      </div>
     </>
   );
-}
+};
 
 export default App;

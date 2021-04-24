@@ -1,11 +1,7 @@
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import OrderBook, { getOrdersToDisplay } from "./OrderBook";
 import useOrderBookFeed from "../hooks/BookOrderFeedHook";
 jest.mock("../hooks/BookOrderFeedHook");
-
-// jest.mock("../hooks/BookOrderFeedHook", () => ({
-//   useFetch: () => mockConfig
-// }));
 
 describe("Gets the orders to display", () => {
   const deep = 5;
@@ -53,7 +49,6 @@ describe("renders the order book", () => {
       webSocket: undefined,
     });
 
-
     const { getByRole, container } = render(
       <OrderBook numLevels={10} productId={productId} url={url} />
     );
@@ -65,8 +60,8 @@ describe("renders the order book", () => {
   test("displays bid and ask order books", () => {
     useOrderBookFeed.mockReturnValue({
       orderBook: {
-        asks:  { 1000: 1, 2000: 2, 3000: 3 },
-        bids:  { 1001: 7, 2001: 7, 3001: 7 },
+        asks: { 1000: 1, 2000: 2, 3000: 3 },
+        bids: { 1001: 7, 2001: 7, 3001: 7 },
         feed: undefined,
         numLevels: 25,
         product_id: productId,
@@ -74,7 +69,6 @@ describe("renders the order book", () => {
       },
       webSocket: undefined,
     });
-
 
     const { getByTestId } = render(
       <OrderBook numLevels={10} productId={productId} url={url} />

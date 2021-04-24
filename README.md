@@ -1,8 +1,8 @@
-# React App / WebSockets Example 
+# React App / WebSockets Example
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Try it 
+## Try it
 
 In the project directory, you can run:
 
@@ -25,12 +25,12 @@ Your app is ready to be deployed!
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
 ### Advanced Configuration
-This projects connects by default to the web socket address `wss://www.cryptofacilities.com/ws/v1`. 
-If another websocket needs to be used, just modify the `env.`  or `env.development` file
+
+This projects connects by default to the web socket address `wss://www.cryptofacilities.com/ws/v1`.
+If another websocket needs to be used, just modify the `env.` or `env.development` file
 
 ```
 REACT_APP_ORDER_BOOK_SOCKET_URL=NEW_URL
 ```
 
-
-### 
+###

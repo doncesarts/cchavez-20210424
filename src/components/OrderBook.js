@@ -29,13 +29,16 @@ export const getOrdersToDisplay = (orders, deep) => {
   return sortedOrders.slice(0, deep);
 };
 const OrderBook = (props) => {
-  const { numLevels, url , productId } = props;
-  const {orderBook, webSocket} = useOrderBookFeed(productId, url);
-  const handleOnClick = (e) => webSocket.close();
+  const { numLevels, url, productId } = props;
+  const { orderBook, webSocket } = useOrderBookFeed(productId, url);
+  const handleOnClick = (e) => {
+    e.preventDefault();
+    webSocket.close();
+  };
   const bids = getOrdersToDisplay(orderBook.bids, numLevels);
   const asks = getOrdersToDisplay(orderBook.asks, numLevels);
   return (
-    <div data-testid="order-book" >
+    <div data-testid="order-book">
       <button onClick={handleOnClick}>Stop</button>
       <section className="text-center">
         <Container maxWidth="md">
@@ -50,7 +53,7 @@ const OrderBook = (props) => {
               <OrderBookTable
                 data-testid="book-ask"
                 title="Order Book Asks"
-                variant="ask" 
+                variant="ask"
                 orders={asks}
               />
             </Grid>
